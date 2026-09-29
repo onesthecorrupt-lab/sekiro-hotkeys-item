@@ -1,0 +1,22 @@
+name: Build Item Hotkey
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: cmake -S . -B build -A x64
+      - run: cmake --build build --config Release
+      - shell: pwsh
+        run: |
+          New-Item -ItemType Directory package -Force
+          Copy-Item build/Release/SekiroItemHotkey.dll package/
+          Copy-Item itemhotkeys.ini package/
+          Compress-Archive package/* SekiroItemHotkey.zip -Force
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SekiroItemHotkey
+          path: SekiroItemHotkey.zip
