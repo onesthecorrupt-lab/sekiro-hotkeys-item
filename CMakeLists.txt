@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.20)
+project(SekiroItemHotkey LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 17)
+add_library(SekiroItemHotkey SHARED src/dllmain.cpp src/config.cpp)
+target_compile_definitions(SekiroItemHotkey PRIVATE WIN32_LEAN_AND_MEAN NOMINMAX)
+set_target_properties(SekiroItemHotkey PROPERTIES OUTPUT_NAME "SekiroItemHotkey")
