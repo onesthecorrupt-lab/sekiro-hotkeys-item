@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <cstdint>
 #include <cstring>
+#include <cstdarg>
 #include "config.h"
 
 static volatile bool g_running = true;
@@ -14,7 +15,7 @@ static void Log(const wchar_t* fmt, ...)
     wchar_t line[1024]{};
     va_list ap;
     va_start(ap, fmt);
-    _vsnwprintf_s(line, _countof(line), _TRUNCATE, fmt, ap);
+    _vsnwprintf_s(line, (sizeof(line) / sizeof(line[0])), _TRUNCATE, fmt, ap);
     va_end(ap);
 
     OutputDebugStringW(line);
